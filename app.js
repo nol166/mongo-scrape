@@ -16,13 +16,14 @@ yargs
         type: "string",
         demandOption: true,
       });
-      // add an argument for the number of records to scrape
+      // number of documents/records
       yargs.option("count", {
         alias: "c",
         describe: "The number of records to scrape",
         type: "number",
         default: 10,
       });
+      // db name
       yargs.option("db", {
         alias: "db",
         describe: "The database to store the data in",
@@ -30,6 +31,7 @@ yargs
         default: "scrape",
         demandOption: true,
       });
+      // collection name
       yargs.option("collection", {
         alias: "col",
         describe: "The collection to store the data in",
@@ -43,8 +45,7 @@ yargs
       axios
         .get(argv.url)
         .then((response) => {
-          // for each element in the response data, console log the element
-          response.data.forEach((element) => console.log(element.id));
+          response.data.forEach((element) => console.log(element));
 
           // connect to the database
           client.connect((err) => {
@@ -54,7 +55,7 @@ yargs
               console.log("Connected to MongoDB!");
               const db = client.db(argv.db);
               const collection = db.collection(argv.collection);
-              
+
               // insert the data into the database
               collection.insertMany(response.data, (err, result) => {
                 if (err) {
