@@ -2,11 +2,11 @@
 
 CLI tool for scraping data and injecting it into a MongoDB collection.
 
-1. [Installation](#installation)
+## [Installation](#installation)
 
 Clone the repo, and run `yarn` to install the dependencies.
 
-2. [Usage](#usage)
+## Usage
 
 ```sh
 mongodb-scraper scrape
@@ -22,8 +22,8 @@ Options:
                                     [string] [required] [default: "scrape_test"]
 ```
 
-4. [Examples](#examples)
+## Examples
 
-```
+```sh
 node app scrape -u https://jsonplaceholder.typicode.com/users -c 10 -d users -col scrape_test
 ```
