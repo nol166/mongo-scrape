@@ -66,7 +66,6 @@ yargs
               });
             }
             // stop the connection to the database
-            client.close();
           });
         })
         .catch((error) => {
