@@ -9,6 +9,7 @@ Clone the repo, and run `yarn` to install the dependencies.
 ## Usage
 
 ```sh
+Options:
 mongodb-scraper scrape
 
 Scrape an API
@@ -18,6 +19,8 @@ Options:
       --help               Show help                                   [boolean]
   -u, --url                The URL to scrape                 [string] [required]
   -c, --count              The number of records to scrape[number] [default: 10]
+  -d, --db                 The database to store the data in
+                                         [string] [required] [default: "scrape"]
       --collection, --col  The collection to store the data in
                                     [string] [required] [default: "scrape_test"]
 ```
