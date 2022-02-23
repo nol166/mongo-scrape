@@ -39,14 +39,33 @@ yargs
         default: "scrape_test",
         demandOption: true,
       });
+      yargs.option("headers", {
+        alias: "h",
+        describe: "The headers to use for the request",
+        type: "string",
+        default: "{}",
+        demandOption: false,
+      });
+      // params
+      yargs.option("params", {
+        alias: "p",
+        describe: "The params to use for the request",
+        type: "string",
+        default: "{}",
+        demandOption: false,
+      });
     },
     (argv) => {
       console.log("Scraping: ", argv.url);
       axios
         .get(argv.url)
         .then((response) => {
-          // console.log(response.data)
-          response.data.forEach((element) => console.log(element));
+          console.log(response.data);
+          if (response.data.length > 0) {
+            console.log("Response data is empty - no data to store");
+            response.data.forEach((element) => console.log(element));
+            process.exit(0);
+          }
 
           // connect to the database
           client.connect((err) => {
@@ -55,18 +74,27 @@ yargs
             } else {
               console.log("Connected to MongoDB!");
               const db = client.db(argv.d);
-              console.log("🚀 - file: app.js - line 57 - client.connect - db", argv.db)
+              console.log(
+                "🚀 - file: app.js - line 57 - client.connect - db",
+                argv.db
+              );
               const collection = db.collection(argv.collection);
-              console.log("🚀 - file: app.js - line 59 - client.connect - collection", argv.collection)
+              console.log(
+                "🚀 - file: app.js - line 59 - client.connect - collection",
+                argv.collection
+              );
 
               // insert the data into the database
-              collection.insertMany(response.data, (err, result) => {
-                if (err) {
-                  console.log(err);
-                } else {
-                  console.log(`Inserted ${result.insertedCount} documents`);
+              collection.insertMany(
+                response.data.results || response.data,
+                (err, result) => {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log(`Inserted ${result.insertedCount} documents`);
+                  }
                 }
-              });
+              );
             }
             // stop the connection to the database
           });
