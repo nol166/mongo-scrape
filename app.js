@@ -1,15 +1,21 @@
+#!/usr/bin/env node
 const axios = require("axios");
 const yargs = require("yargs");
 const { client } = require("./db/connection");
 
-// get the command line arguments
+// if no command line arguments are passed, show help for the "scrape" command
+if (process.argv.length === 2) {
+  yargs.showHelp();
+}
+
 yargs
-  .scriptName("mongodb-scraper")
+  .scriptName("mongodb-scrape")
   .usage("$0 <cmd> [args]")
   .command(
     "scrape",
     "Scrape an API",
     (yargs) => {
+      // if no arguments are passed, show help
       yargs.option("url", {
         alias: "u",
         describe: "The URL to scrape",

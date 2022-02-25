@@ -1,7 +1,18 @@
 {
+  "name": "mongo-scrape",
+  "version": "0.0.1",
+  "description": "CLI that accepts an API endpoint and stores the output to a MongoDB database",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
   "dependencies": {
     "axios": "^0.26.0",
     "mongodb": "^4.3.1",
     "yargs": "^17.3.1"
+  },
+  "bin": {
+    "mongo-scrape": "./app.js scrape"
   }
 }
